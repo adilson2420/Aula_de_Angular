@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Aplicativo Namoro</a>
-        <ul class="navbar-nav mr-auto" *ngIf="loggedIn">
+        <a class="navbar-brand" href="#">Kitade</a>
+        <ul class="navbar-nav mr-auto" *ngIf="contaService.currentUser$ | async">
             <li class="nav-item">
                 <a class="nav-link" href="#">Conrespondência</a>
             </li>
@@ -11,29 +11,25 @@
             <li class="nav-item">
                 <a class="nav-link " href="#">Mensagem</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " (click)="logout()" href="#">Sair</a>
-            </li>
         </ul>
-        <div class="dropdown" *ngIf="loggedIn" dropdown>
+        <div class="dropdown" *ngIf="contaService.currentUser$ | async" dropdown>
             <a class="dropdown-toggle text-light" dropdownToggle>Bem Vindo</a>
-            <div class="dropdown-menu" *dropdownMenu>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
                 <a href="" class="dropdown-item">Editar Perfil</a>
                 <div class="dropdown-divider"></div>
-                <a href="" class="dropdown-item" (click)="logout()">Sair</a>
+                <a href="#" class="dropdown-item" (click)="logout()">Sair</a>
             </div>
         </div>
-
-        <form *ngIf="!loggedIn" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off">
+        <form *ngIf="(contaService.currentUser$ | async) === undefined" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off">
             <input
              name="nomeUsuario"
               [(ngModel)]="model.Nome"
                class="form-control mr-sm-2" type="text"
                 placeholder="Nome Utilizador">
             <input
-             name="senhaUsuario" 
+             name="senhaUsuario"
              [(ngModel)]="model.Senha"
-              class="form-control mr-sm-2" 
+              class="form-control mr-sm-2"
               type="password"
                 placeholder="Senha Utilizador">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
