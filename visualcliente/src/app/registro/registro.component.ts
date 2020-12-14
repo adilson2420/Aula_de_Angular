@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ContaService } from '../_services/conta.service';
 
 @Component({
   selector: 'app-registro',
@@ -6,16 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent implements OnInit {
+  @Output() cancelarRegistro = new EventEmitter();
+
   model: any = {};
-  constructor() {}
+  constructor(private contaServico: ContaService) {}
 
   ngOnInit(): void {}
 
   registrar() {
-    console.log('Dados ..-', this.model);
+    this.contaServico.registro(this.model).subscribe(
+      (response) => {
+        console.log(response);
+        this.cancelar();
+      },
+      (error) => {
+        console.log('Erro ao registrar',error);
+      }
+    );
   }
 
-  cancelar(){
-    console.log('Cancelou');
+  cancelar() {
+    this.cancelarRegistro.emit(false);
   }
 }

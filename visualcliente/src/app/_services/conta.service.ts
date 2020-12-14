@@ -17,13 +17,23 @@ export class ContaService {
   // tslint:disable-next-line: typedef
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'Conta/login', model).pipe(
-      map((response: User) => {
-        const user = response;
+      map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
       })
+    );
+  }
+  registro(model: any){
+    return this.http.post<User>(this.baseUrl + 'Conta/Registrar', model).pipe(
+      map((user: User) => {
+      if(user) {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.currentUserSource.next(user);
+      }
+      return user;
+    })
     );
   }
   // tslint:disable-next-line: typedef

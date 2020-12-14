@@ -11,7 +11,7 @@
   <div *ngIf="registerMode" class="container">
     <div class="row justify-content-center">
       <div class="col-4">
-        <app-registro>... Um momento</app-registro>
+        <app-registro (cancelarRegistro)="cancelarRegistroMode($event)"></app-registro>
       </div>
     </div>
   </div>

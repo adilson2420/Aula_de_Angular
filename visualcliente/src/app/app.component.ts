@@ -13,22 +13,12 @@ export class AppComponent implements OnInit {
   title = 'Kitade Estudo';
   users: any;
 
-  constructor(private http: HttpClient, private contaServicee: ContaService) { }
+  constructor(private contaServicee: ContaService) { }
   ngOnInit(): void {
-    this.getUser();
     this.setCurrenteUser();
   }
   setCurrenteUser() {
     const user: User = JSON.parse(localStorage.getItem("user")??'{}');
     this.contaServicee.setCurrentUser(user);
-  }
-
-  getUser() {
-    localStorage.getItem('user')
-    this.http.get('https://localhost:5001/api/user').subscribe(response => {
-      this.users = response;
-    }, error => {
-      console.log(error);
-    }) 
   }
 }
